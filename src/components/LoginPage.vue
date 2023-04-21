@@ -8,28 +8,20 @@
                         <form action="">
                             <div class="form-group">
                                 <label for="username">Username</label>
-                                <input
-                                    id="username"
-                                    type="text"
-                                    class="form-control"
-                                    v-model="form.username"
-                                />
+                                <input id="username" type="text" class="form-control" v-model="form.username" />
+                                <div class="hide-invalid" :class="{ 'show-invalid': !formValidate.validUsername }">
+                                    Please provide a valid username.
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input
-                                    id="password"
-                                    type="password"
-                                    class="form-control"
-                                    v-model="form.password"
-                                />
+                                <input id="password" type="password" class="form-control" v-model="form.password" />
+                                <div class="hide-invalid" :class="{ 'show-invalid': !formValidate.validPassword }">
+                                    Please provide a valid password.
+                                </div>
                             </div>
 
-                            <button
-                                type="submit"
-                                @click="onSubmit"
-                                class="btn btn-outline-success btn-block mt-4"
-                            >
+                            <button type="submit" @click="onSubmit" class="btn btn-outline-success btn-block mt-4">
                                 Login
                             </button>
                         </form>
@@ -38,32 +30,16 @@
             </div>
         </div>
 
-        <div
-            class="position-fixed bottom-0 right-0 p-3"
-            style="z-index: 5; right: 0; top: 0"
-        >
-            <div
-                id="liveToast"
-                class="toast"
-                role="alert"
-                aria-live="assertive"
-                aria-atomic="true"
-                data-delay="2000"
-            >
+        <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; top: 0">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
                 <div class="toast-header">
-                    <strong class="mr-auto">xxxx</strong>
-                    <small>11 mins ago</small>
-                    <button
-                        type="button"
-                        class="ml-2 mb-1 close"
-                        data-dismiss="toast"
-                        aria-label="Close"
-                    >
+                    <strong class="mr-auto">{{ toast.title }}</strong>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="toast-body">
-                    Hello, world! This is a toast message.
+                    {{ toast.content }}
                 </div>
             </div>
         </div>
@@ -89,13 +65,36 @@ export default {
                 title: "",
                 content: "",
             },
+            formValidate: {
+                validUsername: true,
+                validPassword: true,
+            }
         };
     },
     methods: {
         onSubmit(e) {
             e.preventDefault();
-            this.showToast();
-            // this.login();
+            if (this.checkFormValidate()) {
+                this.login();
+            }
+        },
+
+        checkFormValidate() {
+            if (this.form.username.length == 0) {
+                this.formValidate.validUsername = false;
+            }
+            else {
+                this.formValidate.validUsername = true;
+            }
+
+            if (this.form.password.length == 0) {
+                this.formValidate.validPassword = false;
+            }
+            else {
+                this.formValidate.validPassword = true;
+            }
+
+            return this.formValidate.validPassword && this.formValidate.validUsername;
         },
 
         async login() {
@@ -113,6 +112,7 @@ export default {
                         this.loginData.success = true;
                         this.loginData.token = data.data;
                         this.showToast("success", 200);
+
                         return;
                     }
                     this.loginData.success = false;
@@ -139,8 +139,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login-form {
-    max-width: 300px;
-    margin: auto;
+.show-invalid {
+    color: red;
+    display: block !important;
+    font-size: 0.8rem;
+}
+
+.hide-invalid {
+    display: none;
 }
 </style>

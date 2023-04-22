@@ -47,7 +47,8 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
+import { login } from '../api/auth'
 import $ from "jquery";
 export default {
     data() {
@@ -100,25 +101,17 @@ export default {
         async login() {
             this.isLoading = true;
             try {
-                const res = await axios.post(
-                    "http://oa.pbe.com/api/v1/auth/login",
-                    this.form
-                );
-
+                const data = await login(this.form);
                 this.loginData.isLoading = false;
-                if (res.status == 200) {
-                    const data = res.data;
-                    if (data.code == 200) {
-                        this.loginData.success = true;
-                        this.loginData.token = data.data;
-                        this.showToast("success", 200);
-
-                        return;
-                    }
-                    this.loginData.success = false;
-                    this.loginData.token = "";
-                    this.showToast("fail", data.code);
+                if (data.code == 200) {
+                    this.loginData.success = true;
+                    this.loginData.token = data.data;
+                    this.showToast("success", 200);
+                    return;
                 }
+                this.loginData.success = false;
+                this.loginData.token = "";
+                this.showToast("fail", data.code);
             } catch (error) {
                 console.log(error);
             }

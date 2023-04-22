@@ -1,16 +1,21 @@
 <template>
     <div id="app">
+        <div class="">
+
+        </div>
         <LoginPage></LoginPage>
+        <!-- <DashboardPage /> -->
     </div>
 </template>
 
 <script>
+// import DashboardPage from "./components/DashboardPage.vue";
 import LoginPage from "./components/LoginPage.vue";
-
 export default {
     name: "App",
     components: {
         LoginPage,
+        // DashboardPage
     },
 };
 </script>
@@ -21,6 +26,5 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
-    margin-top: 60px;
 }
 </style>

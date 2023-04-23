@@ -13,6 +13,8 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 /* import specific icons */
 import { fas } from "@fortawesome/free-solid-svg-icons";
 
+import router from "./router/index";
+
 /* add icons to the library */
 library.add(fas);
 
@@ -22,5 +24,6 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.config.productionTip = false;
 /* eslint-disable no-new */
 new Vue({
+  router,
   render: (h) => h(App),
 }).$mount("#app");

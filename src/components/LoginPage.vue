@@ -47,8 +47,8 @@
 </template>
 
 <script>
-// import axios from "axios";
-import { login } from '../api/auth'
+import { login } from '../api/auth';
+import { setToken } from '../api/request'
 import $ from "jquery";
 export default {
     data() {
@@ -107,6 +107,10 @@ export default {
                     this.loginData.success = true;
                     this.loginData.token = data.data;
                     this.showToast("success", 200);
+                    setToken(data.data);
+                    setTimeout(() => {
+                        this.$router.push('/dashboard');
+                    }, 2000);
                     return;
                 }
                 this.loginData.success = false;

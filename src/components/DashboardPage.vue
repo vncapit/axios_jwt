@@ -12,22 +12,32 @@
 </template>
 
 <script>
+import { getUserInfo } from '../api/dashboard/index'
+
 export default {
+    mounted() {
+        this.getLoginUserInfoAsync();
+    },
+
     data() {
         return {
             key: 'value'
         }
     },
-    methods: {
-        name1() {
 
-        }
+    methods: {
+        async getLoginUserInfoAsync() {
+            let data = await getUserInfo();
+        },
+
     },
+
     computed: {
         name() {
             return this.data
         }
     },
+
 
 }
 </script>

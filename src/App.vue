@@ -1,21 +1,15 @@
 <template>
     <div id="app">
-        <div class="">
-
-        </div>
-        <LoginPage></LoginPage>
-        <!-- <DashboardPage /> -->
+        <router-view />
     </div>
 </template>
 
 <script>
-// import DashboardPage from "./components/DashboardPage.vue";
-import LoginPage from "./components/LoginPage.vue";
+
 export default {
     name: "App",
     components: {
-        LoginPage,
-        // DashboardPage
+
     },
 };
 </script>

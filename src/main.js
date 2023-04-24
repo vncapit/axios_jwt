@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 
 import router from "./router/index";
+import store from "./store/index";
 
 /* add icons to the library */
 library.add(fas);
@@ -26,4 +27,5 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   render: (h) => h(App),
+  store,
 }).$mount("#app");

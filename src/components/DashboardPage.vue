@@ -3,8 +3,8 @@
         <nav class="navbar navbar-expand-lg d-flex justify-content-between">
             <font-awesome-icon class="" icon="fa-solid fa-bars" />
             <div class="user d-flex justify-content-end">
-                <img src="../assets/logo.png" alt="" class="avatar">
-                <span class="username">Cap-IT</span>
+                <img :src="avatarPath" alt="" class="avatar">
+                <span class="username">{{ userInfo?.name }}</span>
             </div>
         </nav>
         <div></div>
@@ -12,11 +12,12 @@
 </template>
 
 <script>
-import { getUserInfo } from '../api/dashboard/index'
+
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     mounted() {
-        this.getLoginUserInfoAsync();
+        this.getUserInfo();
     },
 
     data() {
@@ -26,15 +27,13 @@ export default {
     },
 
     methods: {
-        async getLoginUserInfoAsync() {
-            let data = await getUserInfo();
-        },
-
+        ...mapActions('dashboard', ['getUserInfo']),
     },
 
     computed: {
-        name() {
-            return this.data
+        ...mapGetters('dashboard', ['userInfo']),
+        avatarPath() {
+            return 'http://172.18.0.246:90/' + (this.userInfo?.avatar);
         }
     },
 

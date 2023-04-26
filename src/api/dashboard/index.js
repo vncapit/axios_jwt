@@ -15,3 +15,11 @@ export function getActivities(params) {
         params,
     });
 }
+
+export function getMyMenu(params) {
+    return request({
+        url: "/menu/find-all-to-user",
+        method: "get",
+        params,
+    });
+}

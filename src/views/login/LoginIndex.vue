@@ -8,20 +8,46 @@
                         <form action="">
                             <div class="form-group">
                                 <label for="username">Username</label>
-                                <input id="username" type="text" class="form-control" v-model="form.username" />
-                                <div class="hide-invalid" :class="{ 'show-invalid': !formValidate.validUsername }">
+                                <input
+                                    id="username"
+                                    type="text"
+                                    class="form-control"
+                                    v-model="form.username"
+                                />
+                                <div
+                                    class="hide-invalid"
+                                    :class="{
+                                        'show-invalid':
+                                            !formValidate.validUsername,
+                                    }"
+                                >
                                     Please provide a valid username.
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
-                                <input id="password" type="password" class="form-control" v-model="form.password" />
-                                <div class="hide-invalid" :class="{ 'show-invalid': !formValidate.validPassword }">
+                                <input
+                                    id="password"
+                                    type="password"
+                                    class="form-control"
+                                    v-model="form.password"
+                                />
+                                <div
+                                    class="hide-invalid"
+                                    :class="{
+                                        'show-invalid':
+                                            !formValidate.validPassword,
+                                    }"
+                                >
                                     Please provide a valid password.
                                 </div>
                             </div>
 
-                            <button type="submit" @click="onSubmit" class="btn btn-outline-success btn-block mt-4">
+                            <button
+                                type="submit"
+                                @click="onSubmit"
+                                class="btn btn-outline-success btn-block mt-4"
+                            >
                                 Login
                             </button>
                         </form>
@@ -30,11 +56,26 @@
             </div>
         </div>
 
-        <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; top: 0">
-            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+        <div
+            class="position-fixed bottom-0 right-0 p-3"
+            style="z-index: 5; right: 0; top: 0"
+        >
+            <div
+                id="liveToast"
+                class="toast"
+                role="alert"
+                aria-live="assertive"
+                aria-atomic="true"
+                data-delay="2000"
+            >
                 <div class="toast-header">
                     <strong class="mr-auto">{{ toast.title }}</strong>
-                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <button
+                        type="button"
+                        class="ml-2 mb-1 close"
+                        data-dismiss="toast"
+                        aria-label="Close"
+                    >
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -47,8 +88,8 @@
 </template>
 
 <script>
-import { login } from '../api/auth';
-import { setToken } from '../api/request'
+import { login } from "../../api/auth";
+import { setToken } from "../../api/request";
 import $ from "jquery";
 export default {
     data() {
@@ -69,7 +110,7 @@ export default {
             formValidate: {
                 validUsername: true,
                 validPassword: true,
-            }
+            },
         };
     },
     methods: {
@@ -83,19 +124,20 @@ export default {
         checkFormValidate() {
             if (this.form.username.length == 0) {
                 this.formValidate.validUsername = false;
-            }
-            else {
+            } else {
                 this.formValidate.validUsername = true;
             }
 
             if (this.form.password.length == 0) {
                 this.formValidate.validPassword = false;
-            }
-            else {
+            } else {
                 this.formValidate.validPassword = true;
             }
 
-            return this.formValidate.validPassword && this.formValidate.validUsername;
+            return (
+                this.formValidate.validPassword &&
+                this.formValidate.validUsername
+            );
         },
 
         async login() {
@@ -109,7 +151,7 @@ export default {
                     this.showToast("success", 200);
                     setToken(data.data);
                     setTimeout(() => {
-                        this.$router.push('/dashboard');
+                        this.$router.push("/dashboard");
                     }, 2000);
                     return;
                 }

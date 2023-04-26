@@ -14,11 +14,12 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import Header from "./Header-cpn.vue";
-import Carousel from "./Carousel-cpn.vue";
-import Menu from "./Menu-cpn.vue";
+import Header from "./Header.vue";
+import Carousel from "./Carousel.vue";
+import Menu from "./Menu.vue";
 
 export default {
+    name: 'Dashboard',
     components: {
         Header,
         Carousel,

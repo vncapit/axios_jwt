@@ -12,10 +12,11 @@
 
 <script>
 export default {
+    name: 'Header',
     props: {
         userInfo: {
             type: Object,
-            default: () => {},
+            default: () => { },
         },
     },
     computed: {

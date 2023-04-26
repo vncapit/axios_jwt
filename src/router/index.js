@@ -1,18 +1,18 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import DashboardPage from "../views/dashboard/DashboardIndex.vue";
-import LoginPage from "../views/login/LoginIndex.vue";
+import Dashboard from "../views/dashboard/Index.vue";
+import Login from "../views/login/Index.vue";
 
 Vue.use(VueRouter);
 const routes = [
-    { path: "/", component: LoginPage, name: "Login" },
-    { path: "/login", component: LoginPage, name: "Login" },
-    { path: "/dashboard", component: DashboardPage, name: "Dashboard" },
+  { path: "/", component: Login, name: "Login" },
+  { path: "/login", component: Login, name: "Login" },
+  { path: "/dashboard", component: Dashboard, name: "Dashboard" },
 ];
 
 const router = new VueRouter({
-    mode: "history",
-    routes,
+  mode: "history",
+  routes,
 });
 
 export default router;

@@ -5,7 +5,7 @@
                 <div v-show="loggedIn" class="col-md-2">
                     <Menu :my-menu="myMenu" />
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-10" :class="{ 'col-md-12': !loggedIn }">
                     <Header v-show="loggedIn" :user-info="userInfo" />
                     <router-view />
                 </div>

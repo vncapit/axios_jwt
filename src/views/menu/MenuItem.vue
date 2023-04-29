@@ -17,7 +17,6 @@
 <script>
 export default {
     name: "MenuItem",
-    mounted() {},
     props: {
         menu: {
             default: () => [],
@@ -34,6 +33,7 @@ export default {
             } else {
                 this.$refs[this.menu.id].classList.add("expand");
             }
+            this.$router.push(this.menu.path);
         },
     },
 };
@@ -62,6 +62,7 @@ export default {
 
     &:hover {
         background-color: rgba(80, 74, 74, 0.884);
+        cursor: pointer;
     }
 }
 

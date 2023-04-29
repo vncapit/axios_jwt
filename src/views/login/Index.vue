@@ -89,7 +89,8 @@
 
 <script>
 import { login } from "../../api/auth";
-import { setToken } from "../../api/request";
+import { setToken } from "../../base";
+import { mapActions } from "vuex";
 import $ from "jquery";
 export default {
     data() {
@@ -114,6 +115,7 @@ export default {
         };
     },
     methods: {
+        ...mapActions("userBase", ["setLoggedIn"]),
         onSubmit(e) {
             e.preventDefault();
             if (this.checkFormValidate()) {
@@ -150,9 +152,10 @@ export default {
                     this.loginData.token = data.data;
                     this.showToast("success", 200);
                     setToken(data.data);
+                    this.setLoggedIn(true);
                     setTimeout(() => {
                         this.$router.push("/dashboard");
-                    }, 2000);
+                    }, 1000);
                     return;
                 }
                 this.loginData.success = false;

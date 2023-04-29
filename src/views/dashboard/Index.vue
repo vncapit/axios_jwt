@@ -1,52 +1,26 @@
 <template>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3">
-                <Menu :my-menu="myMenu" />
-            </div>
-            <div class="col-md-9">
-                <Header :user-info="userInfo" />
-                <Carousel :top10-activities="top10Activities" />
-            </div>
-        </div>
-    </div>
+    <Carousel :top10-activities="top10Activities" />
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import Header from "./Header.vue";
 import Carousel from "./Carousel.vue";
-import Menu from "./Menu.vue";
 
 export default {
     name: "Dashboard",
     components: {
-        Header,
         Carousel,
-        Menu,
     },
     mounted() {
-        this.getUserInfo();
         this.getTop10Activities({ top: 10, language_enum: 1 });
     },
 
     methods: {
-        ...mapActions("dashboard", [
-            "getUserInfo",
-            "getTop10Activities",
-            "getMyMenu",
-        ]),
+        ...mapActions("dashboard", ["getTop10Activities"]),
     },
 
     computed: {
-        ...mapGetters("dashboard", ["userInfo", "top10Activities", "myMenu"]),
-    },
-    watch: {
-        userInfo(userInfo) {
-            if (userInfo) {
-                this.getMyMenu({ username: userInfo.username });
-            }
-        },
+        ...mapGetters("dashboard", ["top10Activities"]),
     },
 };
 </script>

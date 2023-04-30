@@ -5,7 +5,7 @@
                 class="menu-name"
                 :style="`padding-left: ${nestedNum * 20}px`"
             >
-                {{ menu.name }}
+                {{ $t(menu.name) }}
             </span>
         </div>
         <div class="menu-child" v-for="item in menu.children" :key="item.id">

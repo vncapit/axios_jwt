@@ -26,7 +26,7 @@ export default {
         menus() {
             if (this.myMenu) {
                 let menus = [...this.myMenu];
-                menus.unshift({ name: "Dashboard", path: "/dashboard", id: 0 });
+                menus.unshift({ name: "dashboard", path: "/dashboard", id: 0 });
                 return menus;
             }
             return [];

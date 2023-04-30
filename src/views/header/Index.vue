@@ -2,12 +2,27 @@
     <div>
         <nav class="navbar navbar-expand-lg d-flex justify-content-between">
             <font-awesome-icon class="" icon="fa-solid fa-bars" />
-            <div class="user d-flex justify-content-end" @click="showSubMenu()">
-                <img :src="avatarPath" alt="" class="avatar" />
-                <span class="username">{{ userInfo?.name }}</span>
-                <div v-show="isShowSubMenu" class="sub-menu">
-                    <div class="arrow"></div>
-                    <div @click="handleLogout">Log out</div>
+            <div class="d-flex justify-content-end">
+                <div class="lang" @click="showLang">
+                    <img class="selected-lang" :src="langPath" alt="" />
+                    <ul v-if="isShowLang">
+                        <li
+                            @click="changeLanguage(lang.lang)"
+                            v-for="lang in langList"
+                            :key="lang.lang"
+                        >
+                            <img :src="lang.path" alt="" />
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="user" @click="showSubMenu()">
+                    <img :src="avatarPath" alt="" class="avatar" />
+                    <span class="username">{{ userInfo?.name }}</span>
+                    <div v-show="isShowSubMenu" class="sub-menu">
+                        <div class="arrow"></div>
+                        <div @click="handleLogout">Log out</div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -26,20 +41,55 @@ export default {
             default: () => {},
         },
     },
+    mounted() {
+        setTimeout(() => {
+            this.$i18n.locale = this.selectedLang;
+            console.log(this.$i18n.locale);
+        }, 500);
+    },
     data() {
         return {
             isShowSubMenu: false,
+            isShowLang: false,
+            langList: [
+                {
+                    lang: "vn",
+                    path: "/assets/national_flags/vn.svg",
+                },
+                {
+                    lang: "cn",
+                    path: "/assets/national_flags/cn.svg",
+                },
+                {
+                    lang: "en",
+                    path: "/assets/national_flags/eng.svg",
+                },
+            ],
+            selectedLang: "vn",
         };
     },
     computed: {
+        langPath() {
+            let langPath = this.langList.filter((item) => {
+                return item.lang == this.selectedLang;
+            });
+            return langPath[0]?.path;
+        },
         avatarPath() {
             return "http://172.18.0.246:90/" + this.userInfo?.avatar;
         },
     },
     methods: {
         ...mapActions("userBase", ["setLoggedIn"]),
+        changeLanguage(lang) {
+            this.$i18n.locale = lang;
+            this.selectedLang = lang;
+        },
         showSubMenu() {
             this.isShowSubMenu = !this.isShowSubMenu;
+        },
+        showLang() {
+            this.isShowLang = !this.isShowLang;
         },
         async handleLogout() {
             let res = await logout();
@@ -54,6 +104,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.lang {
+    position: relative;
+    margin-right: 12px;
+    .selected-lang {
+        width: 35px;
+        height: 25px;
+    }
+    ul {
+        position: absolute;
+        z-index: 101;
+        top: 110%;
+        left: -115%;
+
+        li {
+            list-style: none;
+            width: 35px;
+            height: 25px;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+    }
+}
 .user {
     position: relative;
     cursor: pointer;
@@ -82,5 +154,16 @@ export default {
     height: 25px;
     margin-right: 10px;
     border-radius: 50%;
+}
+
+.language {
+    display: block;
+    width: 60px;
+    height: 60px;
+}
+.language option {
+    display: block;
+    width: 60px;
+    height: 60px;
 }
 </style>

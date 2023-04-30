@@ -3,6 +3,7 @@ import App from "./App.vue";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import i18n from "./plugin/i18n";
 
 /* import the fontawesome core */
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -25,7 +26,8 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.config.productionTip = false;
 /* eslint-disable no-new */
 new Vue({
-  router,
-  render: (h) => h(App),
-  store,
+    i18n,
+    router,
+    render: (h) => h(App),
+    store,
 }).$mount("#app");

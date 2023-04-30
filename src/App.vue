@@ -19,6 +19,7 @@ import Header from "./views/header/Index.vue";
 import Menu from "./views/menu/Index.vue";
 import { getToken } from "./base";
 import { mapActions, mapGetters } from "vuex";
+import i18n from "./plugin/i18n";
 
 export default {
     name: "App",
@@ -37,6 +38,7 @@ export default {
         if (token) {
             this.getUserInfo();
         }
+        i18n.locale = "cn";
     },
     methods: {
         ...mapActions("userBase", ["getUserInfo", "getMyMenu"]),

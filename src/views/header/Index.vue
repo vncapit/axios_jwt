@@ -6,11 +6,7 @@
                 <div class="lang" @click="showLang">
                     <img class="selected-lang" :src="langPath" alt="" />
                     <ul v-if="isShowLang">
-                        <li
-                            @click="changeLanguage(lang.lang)"
-                            v-for="lang in langList"
-                            :key="lang.lang"
-                        >
+                        <li @click="changeLanguage(lang.lang)" v-for="lang in langList" :key="lang.lang">
                             <img :src="lang.path" alt="" />
                         </li>
                     </ul>
@@ -32,13 +28,17 @@
 <script>
 import { logout } from "../../api/auth/index";
 import { mapActions } from "vuex";
-import { removeToken } from "../../base";
+import { removeToken, setLang } from "../../base";
 export default {
     name: "Header",
     props: {
+        lang: {
+            type: String,
+            default: () => "cn",
+        },
         userInfo: {
             type: Object,
-            default: () => {},
+            default: () => { },
         },
     },
     mounted() {
@@ -65,7 +65,7 @@ export default {
                     path: "/assets/national_flags/eng.svg",
                 },
             ],
-            selectedLang: "vn",
+            selectedLang: this.lang,
         };
     },
     computed: {
@@ -80,10 +80,12 @@ export default {
         },
     },
     methods: {
-        ...mapActions("userBase", ["setLoggedIn"]),
+        ...mapActions("userBase", ["setLoggedIn", "getTranslations"]),
         changeLanguage(lang) {
             this.$i18n.locale = lang;
             this.selectedLang = lang;
+            setLang(lang);
+            this.getTranslations(lang);
         },
         showSubMenu() {
             this.isShowSubMenu = !this.isShowSubMenu;
@@ -107,10 +109,12 @@ export default {
 .lang {
     position: relative;
     margin-right: 12px;
+
     .selected-lang {
         width: 35px;
         height: 25px;
     }
+
     ul {
         position: absolute;
         z-index: 101;
@@ -126,10 +130,12 @@ export default {
         }
     }
 }
+
 .user {
     position: relative;
     cursor: pointer;
 }
+
 .user .sub-menu {
     position: absolute;
     top: 30px;
@@ -149,6 +155,7 @@ export default {
         border-bottom: 10px solid rgba($color: #b0b8b5, $alpha: 0.7);
     }
 }
+
 .user img {
     width: 25px;
     height: 25px;
@@ -161,6 +168,7 @@ export default {
     width: 60px;
     height: 60px;
 }
+
 .language option {
     display: block;
     width: 60px;

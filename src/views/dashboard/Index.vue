@@ -1,15 +1,20 @@
 <template>
-    <Carousel :top10-activities="top10Activities" />
+    <div>
+        <Carousel :top10-activities="top10Activities" />
+        <AnnouncementTable />
+    </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
 import Carousel from "./Carousel.vue";
+import AnnouncementTable from "./AnnouncementTable.vue";
 
 export default {
     name: "Dashboard",
     components: {
         Carousel,
+        AnnouncementTable,
     },
     mounted() {
         this.getTop10Activities({ top: 10, language_enum: 1 });

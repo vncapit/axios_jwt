@@ -6,7 +6,7 @@
                     <Menu :my-menu="myMenu" />
                 </div>
                 <div class="col-md-10" :class="{ 'col-md-12': !loggedIn }">
-                    <Header v-show="loggedIn" :user-info="userInfo" />
+                    <Header v-show="loggedIn" :user-info="userInfo" :lang="lang" />
                     <router-view />
                 </div>
             </div>
@@ -17,7 +17,7 @@
 <script>
 import Header from "./views/header/Index.vue";
 import Menu from "./views/menu/Index.vue";
-import { getToken } from "./base";
+import { getToken, getLang, setLang } from "./base";
 import { mapActions, mapGetters } from "vuex";
 import i18n from "./plugin/i18n";
 
@@ -30,18 +30,27 @@ export default {
     data() {
         return {
             loggedIn: false,
+            lang: "cn"
         };
     },
-
-    mounted() {
+    created() {
         const token = getToken();
         if (token) {
             this.getUserInfo();
         }
-        i18n.locale = "cn";
-
-        this.getTranslations("cn");
+        const lang = getLang();
+        if (lang) {
+            i18n.locale = lang;
+            this.lang = lang;
+            this.getTranslations(lang);
+        }
+        else {
+            i18n.locale = this.lang;
+            setLang(this.lang);
+            this.getTranslations(this.lang);
+        }
     },
+
     methods: {
         ...mapActions("userBase", [
             "getUserInfo",
@@ -72,7 +81,8 @@ export default {
             this.loggedIn = false;
         },
         translations(trans) {
-            this.$i18n.setLocaleMessage("cn", trans.cn);
+            const lang = getLang();
+            this.$i18n.setLocaleMessage(lang, trans[lang]);
         },
     },
 };

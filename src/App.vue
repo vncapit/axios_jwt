@@ -39,12 +39,23 @@ export default {
             this.getUserInfo();
         }
         i18n.locale = "cn";
+
+        this.getTranslations("cn");
     },
     methods: {
-        ...mapActions("userBase", ["getUserInfo", "getMyMenu"]),
+        ...mapActions("userBase", [
+            "getUserInfo",
+            "getMyMenu",
+            "getTranslations",
+        ]),
     },
     computed: {
-        ...mapGetters("userBase", ["userInfo", "isLoggedIn", "myMenu"]),
+        ...mapGetters("userBase", [
+            "userInfo",
+            "isLoggedIn",
+            "myMenu",
+            "translations",
+        ]),
     },
     watch: {
         userInfo(userInfo) {
@@ -59,6 +70,9 @@ export default {
                 this.loggedIn = true;
             }
             this.loggedIn = false;
+        },
+        translations(trans) {
+            this.$i18n.setLocaleMessage("cn", trans.cn);
         },
     },
 };

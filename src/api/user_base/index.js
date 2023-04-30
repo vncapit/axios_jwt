@@ -15,3 +15,11 @@ export function getMyMenu(params) {
         params,
     });
 }
+
+export function getTranslation(params) {
+    return request({
+        url: "/translation/translations",
+        method: "get",
+        params,
+    });
+}

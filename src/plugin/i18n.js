@@ -5,13 +5,13 @@ Vue.use(VueI18n);
 
 const messages = {
     vn: {
-        dashboard: "Trang chủ",
+        dashboard: "Trang chủ1",
     },
     en: {
-        dashboard: "Dashboard",
+        dashboard: "Dashboard1",
     },
     cn: {
-        dashboard: "首页",
+        dashboard: "首页1",
     },
 };
 
